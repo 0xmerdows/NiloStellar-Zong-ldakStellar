@@ -1,332 +1,117 @@
-# 🌟 Stellar Frontend Starter Template
+StellarVote is a modern, responsive React-based frontend interface designed for a Decentralized Autonomous Organization (DAO) voting system. It simulates a blockchain-based voting experience on the Stellar Network, featuring token-gated polls, real-time result visualization, and gamified user profiles.
 
-> **Build beautiful payment dashboards on Stellar blockchain - Focus only on UI/UX!**
+🚀 Project Overview
+This project demonstrates a sophisticated UI/UX for blockchain governance. It allows users to connect a wallet, participate in community decisions, and earn badges for their activity. The application handles various voting scenarios, including public polls and exclusive "Board Member" polls that require specific asset holdings.
 
-All blockchain logic is already implemented with [Stellar Wallets Kit](https://github.com/Creit-Tech/Stellar-Wallets-Kit). Your job is to create an amazing user experience.
+✨ Key Features
+1. Voting Mechanics
+Memo-Based Voting Simulation: Mimics the Stellar network's voting method where votes are cast via transactions containing specific "Memos."
 
-[![Stellar](https://img.shields.io/badge/Stellar-Testnet-blue)](https://stellar.org)
-[![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.4-blue)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8)](https://tailwindcss.com)
+Token-Gated Governance: Logic to restrict specific polls only to users holding certain tokens (e.g., BOARD_MEMBER token required for treasury decisions).
 
-## 🎯 What's This?
+Live Result Visualization: Dynamic progress bars that update instantly upon voting, calculating percentages and total participation.
 
-This is a **starter template** for building Stellar payment dashboards. Perfect for:
-- 🎓 Learning Stellar blockchain development
-- 🚀 Building your first blockchain app
-- 💼 Creating payment interfaces quickly
-- 🏆 Participating in hackathons
+Locked Results: Results remain hidden (blind voting) until the user casts their vote to prevent bias.
 
-**No blockchain knowledge required!** All the complex blockchain logic is abstracted away in `lib/stellar-helper.ts` (DO NOT MODIFY). You only need to focus on creating beautiful UI/UX.
+2. User Interface (UI) & UX
+Interactive Voting Booth: A sticky sidebar "Voting Booth" that follows the user, providing a seamless checkout-like experience for casting votes.
 
----
+Responsive Design: Fully optimized for both Desktop and Mobile (includes a bottom navigation bar for mobile users).
 
-## ✨ Features
+Dark Mode Aesthetics: A sleek, modern gradient design using Tailwind CSS with glassmorphism effects (backdrop-blur).
 
-### ✅ Already Implemented (Ready to Use!)
+QR Code Integration: Ability to display wallet addresses as QR codes for mobile wallet scanning.
 
-- **Wallet Connection** - Connect with multiple Stellar wallets (Freighter, xBull, Albedo, etc.)
-- **Balance Display** - View XLM balance with auto-refresh
-- **Send Payments** - Send XLM with form validation
-- **Transaction History** - View recent transactions with links to explorer
-- **Responsive Design** - Mobile-friendly base components
-- **Loading States** - Skeletons and spinners
-- **Error Handling** - User-friendly error messages
-- **TypeScript** - Full type safety
+3. Social & Gamification
+Discussion Boards: A comment section for each poll allowing users to discuss options before voting.
 
-### 🎨 Bonus Features (Add These for Extra Credit!)
+Profile & Badges: An achievement system that unlocks NFT-style badges (e.g., "First Vote," "DAO Expert") based on user activity.
 
-All components are in `components/BonusFeatures.tsx` with TODO comments:
+Wallet Simulation: A mock wallet connection flow that simulates public keys, balances, and token holdings.
 
-- [ ] **Dark/Light Mode** (10 points) - Theme toggle
-- [ ] **Copy Address** (5 points) - Already in WalletConnection!
-- [ ] **QR Code** (10 points) - Generate QR for addresses
-- [ ] **Balance Chart** (15 points) - Visualize balance history
-- [ ] **Search Transactions** (10 points) - Filter transaction history
-- [ ] **Multiple Assets** (15 points) - Support for other Stellar assets
-- [ ] **Animations** (10 points) - Smooth transitions
-- [ ] **Mobile Responsive** (10 points) - Perfect mobile experience
-- [ ] **Transaction Confirmations** (10 points) - Confirm before sending
-- [ ] **Address Book** (15 points) - Save frequent addresses
+🛠 Tech Stack
+Framework: React (Next.js App Router structure)
 
----
+Styling: Tailwind CSS
 
-## 🚀 Quick Start
+Icons: Inline SVG Icons (Lucide-style)
 
-### Prerequisites
+State Management: React Hooks (useState, useEffect, useRef)
 
-- **Node.js 18+** - [Download](https://nodejs.org/)
-- **A Stellar Wallet** - Install one of these:
-  - [Freighter](https://freighter.app) (Recommended)
-  - [xBull](https://xbull.app)
-  - [Lobstr](https://lobstr.co)
-  - Or any other [supported wallet](https://github.com/Creit-Tech/Stellar-Wallets-Kit#compatible-wallets)
+🧩 How It Works (Current Logic)
+The application currently runs in Simulation Mode:
 
-### Installation
+Data Structure: Polls are stored in a local constant INITIAL_POLLS.
 
-```bash
-# Clone the repository
-git clone <your-repo-url>
-cd stellar-frontend-challenge
+Wallet Connection: The mockStellar object simulates an asynchronous connection to a wallet (like Freighter), returning a dummy public key and a list of held tokens.
 
-# Install dependencies
-npm install
+Voting Process:
 
-# Start development server
-npm run dev
-```
+The user selects an option.
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+The app checks if the user has the required tokens.
 
-### Get Testnet XLM
+Upon confirmation, it triggers a fake payment delay.
 
-1. Connect your wallet
-2. Copy your address
-3. Visit [Stellar Laboratory](https://laboratory.stellar.org/#account-creator?network=test)
-4. Paste your address and click "Fund"
-5. Refresh your balance!
+The local state is updated to reflect the new vote count and the "Voted" status.
 
----
+🗺 Roadmap & Future Improvements
+The following features are planned or recommended to turn this prototype into a production-ready dApp:
 
-## 📁 Project Structure
+1. Real Blockchain Integration
+Wallet Support: Replace mockStellar with Freighter or Albedo wallet SDKs to sign real transactions.
 
-```
-stellar-frontend-challenge/
-├── app/
-│   ├── globals.css          # Global styles
-│   ├── layout.tsx           # Root layout
-│   └── page.tsx             # Main dashboard page
+Horizon API: Fetch real account balances and transaction history from the Stellar Ledger instead of static data.
+
+Smart Contracts (Soroban): Move the voting logic (counting and validation) to Soroban smart contracts for immutable trustless execution.
+
+2. Backend & Data Persistence
+Database: Connect to a backend (Node.js/Supabase) to store poll metadata (titles, descriptions, comments) off-chain to save gas costs.
+
+IPFS: Store heavy assets (like poll images or detailed proposal PDFs) on IPFS.
+
+3. Advanced Governance Features
+Quadratic Voting: Implement logic where voting power decreases as more votes are used on a single option.
+
+Delegation: Allow users to delegate their voting power (tokens) to another trusted community member.
+
+Multi-Sig Support: Enable polls that execute transactions automatically (e.g., moving funds from a treasury) upon passing, using Multi-Signature accounts.
+
+📸 Visuals & Diagrams
+User Flow (Current Implementation)
+Code Structure
+Bash
+
+src/
 ├── components/
-│   ├── WalletConnection.tsx    # Wallet connect/disconnect
-│   ├── BalanceDisplay.tsx      # Show XLM balance
-│   ├── PaymentForm.tsx         # Send payment form
-│   ├── TransactionHistory.tsx  # Transaction list
-│   ├── BonusFeatures.tsx       # Bonus feature templates
-│   └── example-components.tsx  # Reusable UI components
-├── lib/
-│   └── stellar-helper.ts    # ⚠️ DO NOT MODIFY - Blockchain logic
-└── package.json
-```
+│   ├── Icons.tsx       # SVG Icon definitions
+│   ├── PollChart.tsx   # Visual result bars
+│   ├── QRModal.tsx     # QR Code popup
+│   └── ...
+├── data/
+│   └── mocks.ts        # Initial poll data and mock wallet logic
+└── page.tsx            # Main application logic
+📦 Installation
+Clone the repository.
 
----
+Install dependencies:
 
-## 🎨 Customization Guide
+Bash
 
-### 1. Modify Existing Components
-
-All components are in `components/` folder. They're well-commented and easy to customize:
-
-```tsx
-// Example: Change payment form layout in PaymentForm.tsx
-<div className="space-y-4">
-  <Input label="Recipient" ... />
-  <Input label="Amount" ... />
-  // Add your custom fields here!
-</div>
-```
-
-### 2. Change Colors & Theme
-
-Edit `app/globals.css` or Tailwind classes:
-
-```tsx
-// Change gradient colors in page.tsx
-<div className="bg-gradient-to-br from-blue-500 to-purple-600">
-  // Change these colors to match your brand!
-</div>
-```
-
-### 3. Add Bonus Features
-
-Check `components/BonusFeatures.tsx` for ready-to-use templates:
-
-```tsx
-import { ThemeToggle, AddressQRCode } from '@/components/BonusFeatures';
-
-// Use in your page
-<ThemeToggle />
-<AddressQRCode address={publicKey} />
-```
-
-### 4. Use Example Components
-
-Ready-made components in `example-components.tsx`:
-
-```tsx
-import { Card, Button, Input, Alert } from './example-components';
-
-<Card title="My Feature">
-  <Input label="Name" ... />
-  <Button onClick={...}>Submit</Button>
-</Card>
-```
-
----
-
-## 🛠️ Using the Stellar Helper
-
-All blockchain operations are in `lib/stellar-helper.ts`. **DO NOT MODIFY THIS FILE!**
-
-### Available Methods:
-
-```typescript
-import { stellar } from '@/lib/stellar-helper';
-
-// Connect wallet (opens Stellar Wallets Kit modal)
-const address = await stellar.connectWallet();
-
-// Get balance
-const { xlm, assets } = await stellar.getBalance(address);
-
-// Send payment
-const result = await stellar.sendPayment({
-  from: senderAddress,
-  to: recipientAddress,
-  amount: "10.5",
-  memo: "Payment for services"
-});
-
-// Get transaction history
-const transactions = await stellar.getRecentTransactions(address, 10);
-
-// Get explorer link
-const link = stellar.getExplorerLink(txHash, 'tx');
-
-// Format address (shorten)
-const short = stellar.formatAddress(address, 4, 4); // "GABC...XYZ"
-
-// Disconnect
-stellar.disconnect();
-```
-
----
-
-## 🎓 Learning Resources
-
-### Stellar Blockchain
-- [Stellar Docs](https://developers.stellar.org/)
-- [Stellar Laboratory](https://laboratory.stellar.org/)
-- [Stellar Expert](https://stellar.expert/explorer/testnet) (Blockchain Explorer)
-
-### Stellar Wallets Kit
-- [GitHub Repository](https://github.com/Creit-Tech/Stellar-Wallets-Kit)
-- [Documentation](https://stellarwalletskit.dev/)
-
-### Frontend Technologies
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Tailwind CSS](https://tailwindcss.com/docs)
-- [React Icons](https://react-icons.github.io/react-icons/)
-
----
-
-## 📊 Evaluation Criteria (If Using as Challenge)
-
-### UI/UX Design (40%)
-- Visual appeal and modern design
-- User-friendly interface
-- Consistent styling
-- Good use of colors and typography
-- Responsive layout
-
-### Code Quality (30%)
-- Clean, organized code
-- Proper component structure
-- TypeScript usage
-- Comments where needed
-- No console errors
-
-### Functionality (30%)
-- All required features work
-- Proper error handling
-- Loading states
-- Edge cases handled
-
----
-
-## 🚫 Important Rules
-
-1. **DO NOT** modify `lib/stellar-helper.ts`
-2. **DO NOT** write any blockchain/transaction logic yourself
-3. **DO** focus on making the UI/UX amazing
-4. **DO** use any CSS framework you like (Tailwind is pre-installed)
-5. **DO** add extra features for bonus points
-6. **DO** make it your own - be creative!
-
----
-
-## 📦 Tech Stack
-
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Next.js | 14.2.0 | React Framework |
-| TypeScript | 5.4.5 | Type Safety |
-| Tailwind CSS | 3.4.4 | Styling |
-| Stellar SDK | 12.3.0 | Blockchain |
-| Stellar Wallets Kit | 1.9.5 | Multi-Wallet Support |
-| React Icons | 5.0.1 | Icon Library |
-
----
-
-## 🤝 Contributing
-
-This is a starter template! Feel free to:
-- Fork and customize
-- Share your creations
-- Submit improvements via PR
-- Report issues
-
----
-
-## 📝 License
-
-MIT License - Feel free to use this for learning, hackathons, or commercial projects!
-
----
-
-## 💡 Tips for Success
-
-1. **Start Simple** - Get basic features working first
-2. **Test Often** - Use testnet XLM freely
-3. **Read Comments** - All components have helpful comments
-4. **Check Examples** - Look at `example-components.tsx` for inspiration
-5. **Have Fun!** - Building on blockchain is exciting! 🚀
-
----
-
-## 🆘 Troubleshooting
-
-### Wallet won't connect?
-- Make sure you have a Stellar wallet installed
-- Check if you're on Testnet (not Mainnet)
-- Try refreshing the page
-
-### Balance shows 0?
-- Fund your testnet account at [Stellar Laboratory](https://laboratory.stellar.org/#account-creator?network=test)
-- Click the refresh button in BalanceDisplay
-
-### Transaction fails?
-- Check if you have enough XLM (keep at least 1 XLM as reserve)
-- Verify the recipient address is valid
-- Make sure you're on Testnet
-
-### Build errors?
-```bash
-# Clear cache and reinstall
-rm -rf node_modules package-lock.json
 npm install
-```
+Run the development server:
 
----
+Bash
 
-## 🌟 Show Your Work!
 
-Built something cool with this template? Share it!
-- Tweet with #StellarDevelopers
-- Share in [Stellar Discord](https://discord.gg/stellardev)
-- Submit to [Stellar Community](https://stellar.org/community)
+<img width="1913" height="949" alt="Ekran görüntüsü 2025-11-22 193206" src="https://github.com/user-attachments/assets/d14b73ce-63d8-4142-b155-19a7cf34f9d9" />
 
----
+<img width="452" height="149" alt="Ekran görüntüsü 2025-11-22 194806" src="https://github.com/user-attachments/assets/689045f3-e261-4584-882c-7f1daf3e0eda" />
+<img width="1912" height="952" alt="Ekran görüntüsü 2025-11-22 193220" src="https://github.com/user-attachments/assets/21484a8f-7010-4a04-a806-71ce5b049723" />
+<img width="1909" height="955" alt="Ekran görüntüsü 2025-11-22 193152" src="https://github.com/user-attachments/assets/577a8531-fa59-45f4-90c8-f142d50ebda7" />
 
-**Made with ❤️ for the Stellar Community**
 
-Happy Building! 🚀✨
+npm run dev
+License: MIT
+
+Version: 2.2
